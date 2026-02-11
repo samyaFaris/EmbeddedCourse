@@ -5,12 +5,12 @@ using namespace std;
 #include "visit.h"
 
 
-patient::patient(const char *patient_id, const char *patient_name, const int year, const char *gender) : visit_logical_size(0), visit_physical_size(2)
+patient::patient(const person& p,  const int year, const char *gender) :  person(p), visit_logical_size(0), visit_physical_size(2)
 {
-    this->patient_id = new char[strlen(patient_id) + 1];
-    strcpy(this->patient_id, patient_id);
-    this->patient_name = new char[strlen(patient_name) + 1];
-    strcpy(this->patient_name, patient_name);
+    // this->patient_id = new char[strlen(patient_id) + 1];
+    // strcpy(this->patient_id, patient_id);
+    // this->patient_name = new char[strlen(patient_name) + 1];
+    // strcpy(this->patient_name, patient_name);
     this->year = year;
     this->gender = new char[strlen(gender) + 1];
     strcpy(this->gender, gender);
@@ -21,14 +21,14 @@ patient::patient(const char *patient_id, const char *patient_name, const int yea
     }
 }
 
-char *patient::get_patient_id()
-{
-    return this->patient_id;
-}
-const char *patient::get_patient_name() const
-{
-    return this->patient_name;
-}
+// char *patient::get_patient_id()
+// {
+//     return this->patient_id;
+// }
+// const char *patient::get_patient_name() const
+// {
+//     return this->patient_name;
+// }
 int patient::get_year()
 {
     return this->year;
@@ -55,13 +55,13 @@ bool patient::set_visit_physical_size(int visit_physical_size)
     this->visit_physical_size = visit_physical_size;
     return true;
 }
-bool patient::set_patient_name(char *patient_name)
-{
-    delete this->patient_name;
-    this->patient_name = new char[strlen(patient_name) + 1];
-    strcpy(this->patient_name, patient_name);
-    return true;
-}
+// bool patient::set_patient_name(char *patient_name)
+// {
+//     delete this->patient_name;
+//     this->patient_name = new char[strlen(patient_name) + 1];
+//     strcpy(this->patient_name, patient_name);
+//     return true;
+// }
 bool patient::set_year(int year)
 {
     this->year = year;
@@ -76,8 +76,7 @@ bool patient::set_gender(char *gender)
 }
 patient::~patient()
 {
-    delete patient_id;
-    delete patient_name;
+
     delete gender;
 }
 bool patient::add_visit_patient(visit *visitPtr)
@@ -107,7 +106,8 @@ bool patient::add_visit_patient(visit *visitPtr)
 ostream &operator<<(ostream &os, const patient &p)
 {
     os << "Patient Details: \n";
-    os << "Patient Name: " << p.patient_name << "\n";
+    // os << "Patient Name: " << p.patient_name << "\n";
+    os << (person&)p ;
     os << "Birth Year: " << p.year << "\n";
     os << "Gender: " << p.gender << "\n";
     os << "Visits Deatils : \n";

@@ -2,15 +2,16 @@
 #define __PATIENT_H
 #include <iostream>
 using namespace std;
+#include "person.h"
 
 class visit;
 
-class patient
+class patient : public person
 {
 
 private:
-    char *patient_id;
-    char *patient_name;
+    // char *patient_id;
+    // char *patient_name;
     int year;
     char *gender;
     visit **visitsP_arr;
@@ -19,7 +20,7 @@ private:
     patient(patient &p) = delete;
 
 public:
-    patient(const char *patient_id, const char *patient_name, const int year, const char *gender);
+    patient(const person& p, const int year, const char *gender);
     char *get_patient_id();
     const char *get_patient_name() const;
     int get_year();

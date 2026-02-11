@@ -33,7 +33,7 @@ ostream &operator<<(ostream &os, const visit &v)
 {
     os << "Visit Details: \n";
     os << "Visit Date: " << v.visit_date << "\n";
-    os << "Patient Name: " << v.patientPtr->get_patient_name() << "\n";
+    os << "Patient Name: " << v.patientPtr->get_personName() << "\n";
     return os;
 
 }

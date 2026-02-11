@@ -1,0 +1,24 @@
+#include<stdio.h>
+
+
+
+int reverse_bin(unsigned char _char)
+{
+    printf("_%s", _char );
+    char right_dig;
+    for(int i=0;i<7;i++)
+    {
+        right_dig= _char & 1;
+        _char >> 1;
+        right_dig << 7;
+        _char | right_dig;
+
+    }
+
+        printf("_%s", _char );
+
+}
+void main ( )
+{
+reverse_bin('1');
+}

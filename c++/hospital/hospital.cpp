@@ -7,7 +7,7 @@ int hospital::idCount = 0;
 
 hospital::hospital(const char *hospitalName, const char *researchCenterName) : doctor_physical_size(2), doctor_logical_size(0), researchCenterH(researchCenterName),
                                                                                department_logical_size(0), department_physical_size(2), patient_logical_size(0), patient_physical_size(2),
-                                                                               visit_logical_size(0), visit_physical_size(2)
+                                                                               visit_logical_size(0), visit_physical_size(2), nurse_logical_size(0), nurse_physical_size(2)
 {
     this->hospitalName = new char[strlen(hospitalName) + 1];
     strcpy(this->hospitalName, hospitalName);
@@ -31,6 +31,11 @@ hospital::hospital(const char *hospitalName, const char *researchCenterName) : d
     {
         this->visit_arr[i] = nullptr;
     }
+    this->nurse_arr = new nurse *[nurse_physical_size];
+    for (int i = 0; i < nurse_physical_size; i++)
+    {
+        this->nurse_arr[i] = nullptr;
+    }
 }
 char *hospital::get_hospitalName()
 {
@@ -43,6 +48,10 @@ doctor **hospital::get_doctor_arr()
 department **hospital::get_department_arr()
 {
     return this->department_arr;
+}
+nurse **hospital::get_nurse_arr()
+{
+    return this->nurse_arr;
 }
 int hospital::get_doctor_logical_size()
 {
@@ -75,6 +84,14 @@ int hospital::get_visit_logical_size()
 int hospital::get_visit_physical_size()
 {
     return visit_physical_size;
+}
+int hospital::get_nurse_logical_size()
+{
+    return nurse_logical_size;
+}
+int hospital::get_nurse_physical_size()
+{
+    return nurse_physical_size;
 }
 bool hospital::set_doctor_logical_size(int doctor_logical_size)
 {
@@ -116,6 +133,16 @@ bool hospital::set_visit_physical_size(int visit_physical_size)
     this->visit_physical_size = visit_physical_size;
     return true;
 }
+bool hospital::set_nurse_logical_size(int nurse_logical_size)
+{
+    this->nurse_logical_size = nurse_logical_size;
+    return true;
+}
+bool hospital::set_nurse_physical_size(int nurse_physical_size)
+{
+    this->nurse_physical_size = nurse_physical_size;
+    return true;
+}
 hospital::~hospital()
 {
     for (int i = 0; i < doctor_logical_size; i++)
@@ -126,6 +153,7 @@ hospital::~hospital()
     {
         delete department_arr[i];
     }
+
     delete[] doctor_arr;
     delete[] department_arr;
     delete[] hospitalName;
@@ -165,7 +193,7 @@ bool hospital::add_department_to_hospital(const char *departmentName)
     return true;
 }
 
-bool hospital::add_doctor_to_hospital(const char *doctorName, const char *experties, const char *departmentName)
+bool hospital::add_doctor_to_hospital(const char *doctorName, const char *doctorId, const char *experties, const char *departmentName)
 {
     department *departmentDoctor = nullptr;
     int flag = 0;
@@ -182,7 +210,11 @@ bool hospital::add_doctor_to_hospital(const char *doctorName, const char *expert
         cout << "The hospital dosent department: " << departmentName << "cant add this doctor to our hospita";
         return false;
     }
-    doctor *doctor_in_hospital = new doctor(doctorName, idCount, experties);
+    person *p = new person(doctorId, doctorName);
+    employee *emp = new employee(*p, idCount);
+    idCount++;
+    // doctor *doctor_in_hospital = new doctor(doctorName, idCount, experties);
+    doctor *doctor_in_hospital = new doctor(*emp, experties);
     if (doctor_logical_size < doctor_physical_size)
     {
         doctor_arr[doctor_logical_size] = doctor_in_hospital;
@@ -206,18 +238,95 @@ bool hospital::add_doctor_to_hospital(const char *doctorName, const char *expert
     return true;
 }
 
+bool hospital::add_researcher_to_hospital(const char *researcher_name, const char *researcher_id)
+{
+    person *p = new person(researcher_id, researcher_name);
+    employee *emp = new employee(*p, idCount);
+    idCount++;
+    researcher *researcher_in_hospital = new researcher(*emp);
+    // cout << *researcher_in_hospital;
+    this->researchCenterH.add_researcher(researcher_in_hospital);
+    return true;
+}
+bool hospital::add_article(const char *pupDate, const char *articleName, const char *magazineName, const char *researcherId)
+{
+    researcher *researcher_article = nullptr;
+    int flag = 0;
+    for (int i = 0; i < this->researchCenterH.get_researcher_logical_size(); i++)
+    {
+
+        if (strcmp(researcherId, this->researchCenterH.get_researcher_arr()[i]->get_person_id()) == 0)
+        {
+            researcher_article = researchCenterH.get_researcher_arr()[i];
+            flag = 1;
+        }
+    }
+    if (flag == 0)
+    {
+        cout << "Cant add this aticle, researcher doesnt exist";
+        return false;
+    }
+    article * articleToAdd=new article(pupDate,articleName,magazineName);
+    researcher_article->add_article_to_researcher(articleToAdd);
+    return true;
+}
+
+bool hospital::add_nurse_to_hospital(const char *nurseName, const char *nurseId, int experienceYears, const char *departmentName)
+{
+    department *departmentNurse = nullptr;
+    int flag = 0;
+    for (int i = 0; i < department_logical_size; i++)
+    {
+        if (strcmp(departmentName, (*(department_arr[i])).get_dep_name()) == 0)
+        {
+            flag = 1;
+            departmentNurse = department_arr[i];
+        }
+    }
+    if (flag == 0)
+    {
+        cout << "The hospital dosent department: " << departmentName << "cant add this doctor to our hospita";
+        return false;
+    }
+    person *n = new person(nurseId, nurseName);
+    employee *emp = new employee(*n, idCount);
+    nurse *nurse_in_hospital = new nurse(*emp, experienceYears);
+    idCount++;
+    if (nurse_logical_size < nurse_physical_size)
+    {
+        nurse_arr[nurse_logical_size] = nurse_in_hospital;
+        set_nurse_logical_size(nurse_logical_size + 1);
+    }
+    else
+    {
+
+        nurse_physical_size *= 2;
+        nurse **temp = new nurse *[nurse_physical_size];
+        for (int i = 0; i < nurse_logical_size; i++)
+        {
+            temp[i] = nurse_arr[i];
+        }
+        delete[] nurse_arr;
+        this->nurse_arr = temp;
+        nurse_arr[nurse_logical_size] = nurse_in_hospital;
+        set_nurse_logical_size(nurse_logical_size + 1);
+    }
+    departmentNurse->add_nurse_to_dep(nurse_in_hospital);
+    return true;
+}
+
 bool hospital::add_patient_to_hospital(const char *patient_id, const char *patient_name, const int year, const char *gender)
 {
     for (int i = 0; i < patient_logical_size; i++)
     {
-        if (strcmp(patient_arr[i]->get_patient_id(), patient_id) == 0)
+        if (strcmp(patient_arr[i]->get_person_id(), patient_id) == 0)
         {
             cout << "This patient" << patient_name << " already exists in the hospital.";
             return false;
         }
     }
-
-    patient *patient_in_hospital = new patient(patient_id, patient_name, year, gender);
+    person *p1 = new person(patient_id, patient_name);
+    patient *patient_in_hospital = new patient(*p1, year, gender);
     if (patient_logical_size < patient_physical_size)
     {
         patient_arr[patient_logical_size] = patient_in_hospital;
@@ -246,7 +355,7 @@ bool hospital::add_visit(const char *visitDate, const char *patientId)
     patient *patientVisit = nullptr;
     for (int i = 0; i < patient_logical_size; i++)
     {
-        if (strcmp(patientId, patient_arr[i]->get_patient_id()) == 0)
+        if (strcmp(patientId, patient_arr[i]->get_person_id()) == 0)
         {
             flag = 1;
             patientVisit = patient_arr[i];
@@ -294,7 +403,7 @@ ostream &operator<<(ostream &os, const hospital &h)
         os << *(h.patient_arr[i]);
     }
 
-    for(int i=0;i<h.visit_logical_size;i++)
+    for (int i = 0; i < h.visit_logical_size; i++)
     {
         os << *(h.visit_arr[i]);
     }
