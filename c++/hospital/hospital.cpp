@@ -268,6 +268,7 @@ bool hospital::add_article(const char *pupDate, const char *articleName, const c
     }
     article * articleToAdd=new article(pupDate,articleName,magazineName);
     researcher_article->add_article_to_researcher(articleToAdd);
+    this->researchCenterH.add_article(articleToAdd);
     return true;
 }
 

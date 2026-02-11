@@ -7,8 +7,13 @@ employee::employee(const person &p, const int workerId) : person(p)
 {
     this->workerId = workerId;
 }
+employee::employee(person &&p, int workerId): person (p)
+{
+       
+        this->workerId = workerId;
 
-int employee::get_workerId()
+}
+const int employee::get_workerId()const
 {
     return this->workerId;
 }

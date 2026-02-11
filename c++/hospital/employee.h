@@ -11,7 +11,8 @@ protected:
 
 public:
     employee(const person &p, const int workerId);
-    int get_workerId();
+    employee(person &&p, int workerId);
+    const int get_workerId() const;
     bool set_workerId(int workerId);
     friend ostream &operator<<(ostream &os, const employee &emp);
 };

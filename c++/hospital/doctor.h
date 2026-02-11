@@ -18,7 +18,7 @@ protected:
 public:
     doctor(const employee &emp, const char *experties);
     ~doctor();
-    department *get_departmentPtr();
+    department *get_departmentPtr() ;
     const char *get_worker_experties() const;
     bool set_worker_experties(char *experties);
     bool set_departmentPtr(department *departmentPtr);

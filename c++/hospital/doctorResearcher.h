@@ -7,7 +7,8 @@ using namespace std;
 
 class doctorResearcher : public doctor, public researcher
 {
-
+    public: 
+    doctorResearcher(const doctor&d, const researcher&r);
 };
 
 #endif
