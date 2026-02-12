@@ -4,6 +4,10 @@ using namespace std;
 #include <string.h>
 #include "department.h"
 
+nurse::nurse(const char *nurseName, const char *nurseId, int idCount, int experienceYears) : employee(nurseId, nurseName,idCount)
+{
+    this->experienceYears = experienceYears;
+}
 nurse::nurse(const employee &e, int experienceYears) : employee(e)
 {
     this->experienceYears = experienceYears;

@@ -130,7 +130,7 @@ researchCenter::~researchCenter()
 ostream &operator<<(ostream &os, const researchCenter &r)
 {
     os << "----- Research Center ----- \n";
-    os << "Research Center Name : " << r.researchCenter_name << "\n";
+    os << "Research Center Name : \n" << r.researchCenter_name << "\n";
     os << "----- Research Center Employee List  ----- \n";
     for (int i = 0; i < r.researcher_logical_size; i++)
     {

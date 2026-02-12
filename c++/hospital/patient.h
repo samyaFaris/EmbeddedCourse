@@ -20,6 +20,7 @@ private:
     patient(patient &p) = delete;
 
 public:
+    patient(const char *personId, const char *personName, const int year, const char *gender);
     patient(const person& p, const int year, const char *gender);
     char *get_patient_id();
     const char *get_patient_name() const;

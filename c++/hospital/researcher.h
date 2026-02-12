@@ -5,7 +5,7 @@ using namespace std;
 #include "employee.h"
 #include "article.h"
 
-class researcher :  virtual public employee
+class researcher : virtual public employee
 {
 protected:
     article **articles;
@@ -14,6 +14,8 @@ protected:
 
 public:
     researcher(const employee &e);
+    researcher(const char *rName, const char *rId, int idCounter);
+    researcher(employee &&e);
     int get_article_logical_size();
     int get_article_physical_size();
     article **get_articles();

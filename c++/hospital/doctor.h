@@ -17,6 +17,8 @@ protected:
 
 public:
     doctor(const employee &emp, const char *experties);
+    doctor(const char *doctorName, const char *doctorId, int idCount,const char *experties);
+    doctor( employee &&emp,  const char *experties);
     ~doctor();
     department *get_departmentPtr() ;
     const char *get_worker_experties() const;

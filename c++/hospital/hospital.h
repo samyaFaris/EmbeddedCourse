@@ -8,6 +8,7 @@
 #include "nurse.h"
 #include "researcher.h"
 #include "article.h"
+#include "doctorResearcher.h"
 
 class hospital
 {
@@ -20,6 +21,9 @@ private:
     patient **patient_arr;
     visit **visit_arr;
     nurse **nurse_arr;
+    employee** employee_arr;  
+    int employee_logical_size;
+    int employee_physical_size;
     int doctor_logical_size;
     int doctor_physical_size;
     int department_logical_size;
@@ -62,6 +66,7 @@ public:
     bool add_doctor_to_hospital(const char *doctorName, const char *doctorId, const char *experties, const char *departmentName);
     bool add_nurse_to_hospital(const char *nurseName, const char *nurseId, int experienceYears, const char *departmentName);
     bool add_researcher_to_hospital(const char *researchert_name, const char *researcher_id);
+    bool add_doctor_researcher_to_hospital(const char *researchert_name, const char *researcher_id,const char *experties, const char *departmentName);
     bool add_patient_to_hospital(const char *patient_id, const char *patient_name, const int year, const char *gender);
     bool add_visit(const char *visitDate, const char *patientId);
     bool add_article( const char *pupDate, const char *articleName, const char *magazineName, const char* researcherId);

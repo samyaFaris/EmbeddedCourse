@@ -13,6 +13,7 @@ private:
 
 public:
     nurse(const employee &e, int experienceYears);
+    nurse(const char *nurseName ,const char *nurseId,int idCount, int experienceYears);
     int get_experienceYears();
     department *get_departmentPtr();
     bool set_experienceYears(int experienceYears);

@@ -4,13 +4,19 @@ using namespace std;
 #include "patient.h"
 #include "visit.h"
 
-
-patient::patient(const person& p,  const int year, const char *gender) :  person(p), visit_logical_size(0), visit_physical_size(2)
+patient::patient(const char *personId, const char *personName, const int year, const char *gender) : person(personId, personName),visit_logical_size(0), visit_physical_size(2)
 {
-    // this->patient_id = new char[strlen(patient_id) + 1];
-    // strcpy(this->patient_id, patient_id);
-    // this->patient_name = new char[strlen(patient_name) + 1];
-    // strcpy(this->patient_name, patient_name);
+    this->year = year;
+    this->gender = new char[strlen(gender) + 1];
+    strcpy(this->gender, gender);
+    this->visitsP_arr = new visit *[visit_physical_size];
+    for (int i = 0; i < visit_physical_size; i++)
+    {
+        visitsP_arr[i] = nullptr;
+    }
+}
+patient::patient(const person &p, const int year, const char *gender) : person(p), visit_logical_size(0), visit_physical_size(2)
+{
     this->year = year;
     this->gender = new char[strlen(gender) + 1];
     strcpy(this->gender, gender);
@@ -107,13 +113,13 @@ ostream &operator<<(ostream &os, const patient &p)
 {
     os << "Patient Details: \n";
     // os << "Patient Name: " << p.patient_name << "\n";
-    os << (person&)p ;
+    os << (person &)p;
     os << "Birth Year: " << p.year << "\n";
     os << "Gender: " << p.gender << "\n";
     os << "Visits Deatils : \n";
-    for (int i=0;i<p.visit_logical_size;i++)
+    for (int i = 0; i < p.visit_logical_size; i++)
     {
-        os << "visit "<< i+1 <<" : "<< p.visitsP_arr[i]->get_visit_date()<<"\n";
+        os << "visit " << i + 1 << " : " << p.visitsP_arr[i]->get_visit_date() << "\n";
     }
 
     return os;

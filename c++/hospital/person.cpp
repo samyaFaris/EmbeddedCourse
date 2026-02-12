@@ -16,6 +16,8 @@ person::person(const person &p)
 }
 person::person(person &&p)
 {
+        cout << "move person";
+
     this->personId = p.personId;
     p.personId = nullptr;
     this->personName = p.personName;
@@ -70,7 +72,6 @@ const person &person::operator=(const person &p)
 }
 ostream &operator<<(ostream &os, const person &p)
 {
-    os << "Person Details: \n";
     os << "Person Id: " << p.personId << "\n";
     os << "Name: " << p.personName <<"\n";
     return os;
