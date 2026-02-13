@@ -4,6 +4,7 @@
 #include "doctor.h"
 #include "nurse.h"
 #include "surgeon.h"
+#include "doctorResearcher.h"
 using namespace std;
 #include <list>
 

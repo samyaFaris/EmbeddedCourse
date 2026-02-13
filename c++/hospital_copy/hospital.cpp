@@ -182,7 +182,22 @@ bool hospital::add_visit(const string &visitDate, const string &patientId)
     }
     visit *visit_in_hospital = new visit(visitDate, patientVisit);
     patientVisit->add_visit_patient(visit_in_hospital);
+    visit_arr.push_back(visit_in_hospital);
 
+    return true;
+}
+
+bool hospital::add_surgerieVisit(const string &visitDate, const string &patientId, int numSurgerieRoom, bool isFasting)
+{
+    patient *patientVisit = find_patient_byId(patientId);
+    if (patientVisit == nullptr)
+    {
+        cout << "The patient dos'nt exist in the hospital, cant add the visit.";
+        return false;
+    }
+    surgerieVisit *visit_in_hospital = new surgerieVisit(visitDate, patientVisit, numSurgerieRoom, isFasting);
+    patientVisit->add_visit_patient(visit_in_hospital);
+    visit_arr.push_back(visit_in_hospital);
     return true;
 }
 

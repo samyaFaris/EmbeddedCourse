@@ -15,10 +15,7 @@ researcher(doctor_researcher_id,doctor_researcher_name,idCounter)
 
 ostream &operator<<(ostream &os, const doctorResearcher &dr)
 {
-    os << " -------- doctorResearcher -----------";
-    os << "**********Doctor: \n";
+    os << " -------- doctorResearcher ----------- \n";
     os << (doctor &)dr;
-    // os << "**********Researcher: \n";
-    // os << (researcher &)dr;
     return os;
 }

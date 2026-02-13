@@ -23,6 +23,6 @@ ostream &operator<<(ostream &os, const surgeon &s)
 {
     os << "--------- SURGEON DETAILS --------- \n";
     os << (doctor &)s;
-    os<< "Number Of Surgeries : " << s.numberOfSurgeries;
+    os<< "Number Of Surgeries : " << s.numberOfSurgeries <<"\n";
     return os;
 }

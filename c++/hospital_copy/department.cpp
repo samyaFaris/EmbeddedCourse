@@ -57,6 +57,10 @@ ostream &operator<<(ostream &os, const department &dep)
       {
          os << *(surgeon *)(*itr);
       }
+      else if (typeid(**itr) == typeid(doctorResearcher))
+      {
+         os << *(doctorResearcher *)(*itr);
+      }
       else
       {
          os << **itr << endl;
