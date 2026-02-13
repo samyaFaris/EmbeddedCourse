@@ -19,7 +19,7 @@ public:
     const string& get_worker_experties() const;
     bool set_worker_experties(const string& experties);
     bool set_departmentPtr(department *departmentPtr);
-    friend ostream &operator<<(ostream &os, const doctor &d);
+    friend  ostream &operator<<(ostream &os, const doctor &d);
 };
 
 #endif

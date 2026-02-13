@@ -32,7 +32,6 @@ ostream &operator<<(ostream &os, const nurse &n)
     os << "----------------Nurse Details : ---------------------\n";
     os << (employee&)n;
     os << "experience Years" << n.experienceYears;
-    os << "Department Name: " << (n.departmentPtr)->get_dep_name() << "\n";
 
     return os;
 }
