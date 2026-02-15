@@ -66,7 +66,7 @@ ostream &operator<<(ostream &os, const patient &p) //
       }
       else 
       {
-        os << (*itr)->get_visit_date() << "\n";
+        os << (**itr) << "\n";
 
       }
     }

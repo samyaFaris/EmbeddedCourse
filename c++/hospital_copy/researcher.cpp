@@ -15,7 +15,7 @@ list<article> researcher::get_articles() const
 
 ostream &operator<<(ostream &os, const researcher &r)
 {
-    os << "---------- RESEARCHER DETAILS  ----------";
+    os << "---------- RESEARCHER DETAILS  ----------\n";
     os << (employee &)r;
     list<article>::const_iterator itr = r.articles.begin();
     list<article>::const_iterator itrEnd = r.articles.end();

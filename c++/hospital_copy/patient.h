@@ -24,7 +24,7 @@ public:
     bool set_gender(const string &gender);
     bool add_visit_patient(visit *visitPtr);
     friend ostream &operator<<(ostream &os, const patient &p);
-    virtual ~patient() {}
+    // virtual ~patient() {}
 };
 
 #endif

@@ -3,7 +3,7 @@ using namespace std;
 #include <string.h>
 #include "surgerieVisit.h"
 
-surgerieVisit::surgerieVisit(const string &visit_date, patient *patientPtr, int numSurgerieRoom, bool isFasting) : visit(visit_date, patientPtr)
+surgerieVisit::surgerieVisit(const string &visit_date, patient *patientPtr,string visit_purpose_visit,department *depPtr,  employee * employeePtr ,int numSurgerieRoom, bool isFasting) : visit(visit_date, patientPtr,visit_purpose_visit,depPtr,employeePtr)
 {
 
     this->numSurgerieRoom = numSurgerieRoom;
@@ -34,11 +34,11 @@ ostream &operator<<(ostream &os, const surgerieVisit &s)
     os << "Num Surgerie Room : " << s.numSurgerieRoom << "\n";
     if (s.isFasting)
     {
-        os << "Is Fasting : Yes";
+        os << "Is Fasting : Ye \n";
     }
     else
     {
-        os << "Is Fasting : No";
+        os << "Is Fasting : No \n";
     }
     return os;
 }

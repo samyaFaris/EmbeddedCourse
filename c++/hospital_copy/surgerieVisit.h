@@ -14,7 +14,7 @@ int numSurgerieRoom;
 bool isFasting;
 
 public:
-    surgerieVisit(const string& visit_date,  patient *patientPtr, int numSurgerieRoom,bool isFasting);
+    surgerieVisit(const string& visit_date,  patient *patientPtr,string visit_purpose_visit,department *depPtr,  employee * employeePtr,int numSurgerieRoom,bool isFasting);
     int get_numSurgerieRoom()const;
     bool get_isFasting() const;
     bool set_numSurgerieRoom(const int numSurgerieRoom);

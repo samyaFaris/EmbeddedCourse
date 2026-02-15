@@ -34,13 +34,25 @@ department *hospital::check_department_exist(const string &departmentName)
     return nullptr;
 }
 
+employee *hospital::find_employee_byId(const string &employeeId)
+{
+    list<employee *>::iterator itr = this->employee_arr.begin();
+    list<employee *>::iterator itrEnd = this->employee_arr.end();
+    for (; itr != itrEnd; ++itr)
+    {
+        if ((*itr)->get_person_id() == employeeId)
+            return &(**itr);
+    }
+    return nullptr;
+}
+
 bool hospital::add_department_to_hospital(const string &departmentName)
 {
 
     if (check_department_exist(departmentName) == nullptr) // department dosnt exist
     {
-        department *department_in_hospital = new department(departmentName);
-        department_arr.push_back(*department_in_hospital);
+        // department *department_in_hospital = new department(departmentName);
+        department_arr.push_back(department(departmentName));
         return true;
     }
     return false;
@@ -48,14 +60,18 @@ bool hospital::add_department_to_hospital(const string &departmentName)
 
 bool hospital::add_doctor_to_hospital(const string &doctorName, const string &doctorId, const string &experties, const string &departmentName)
 {
+    if (find_employee_byId(doctorId)!=nullptr)
+    {
+        cout << "ERR: The doctor already exist in the hospital, cant add";
+    }
     department *departmentDoctor = check_department_exist(departmentName);
     if (departmentDoctor == nullptr)
     {
-        cout << "The hospital dosent department: " << departmentName << "cant add this doctor to our hospita";
+        cout << "The department dosent exist: " << departmentName << "cant add this doctor to our hospita";
         return false;
     }
     idCount++;
-    doctor *doctor_in_hospital = new doctor(doctorId, doctorName, idCount, experties);
+    doctor *doctor_in_hospital = new doctor(doctorName, doctorId, idCount, experties);
     departmentDoctor->add_doctor_to_dep(doctor_in_hospital);
     this->employee_arr.push_back(doctor_in_hospital);
     return true;
@@ -94,7 +110,6 @@ bool hospital::add_article(const string &pupDate, const string &articleName, con
     {
         if (researcherId == (*itr)->get_person_id())
         {
-            cout << (*itr)->get_person_id() << "\n";
             researcher_article = *itr;
             flag = 1;
             break;
@@ -172,30 +187,57 @@ bool hospital::add_patient_to_hospital(const string &patient_id, const string &p
     return true;
 }
 
-bool hospital::add_visit(const string &visitDate, const string &patientId)
+bool hospital::add_visit(const string &visitDate, const string &patientId, const string &visit_purpose_visit, const string &departmentName, const string &employeeId)
 {
+    department *departmentVisit = check_department_exist(departmentName);
+    employee *employeePtr = find_employee_byId(employeeId);
+    if (departmentVisit == nullptr)
+
+    {
+        cout << " ERR: The department dosent exist: " << departmentName << "cant add this visit to our hospita";
+        return false;
+    }
+    if (employeePtr == nullptr)
+    {
+        cout << " ERR: The employee dosent exist: " << employeeId << " cant add this visit to our hospita";
+        return false;
+    }
     patient *patientVisit = find_patient_byId(patientId);
     if (patientVisit == nullptr)
     {
         cout << "The patient dos'nt exist in the hospital, cant add the visit.";
         return false;
     }
-    visit *visit_in_hospital = new visit(visitDate, patientVisit);
+    cout << departmentVisit->get_dep_name() << "\n";
+    visit *visit_in_hospital = new visit(visitDate, patientVisit,visit_purpose_visit,departmentVisit,employeePtr);
     patientVisit->add_visit_patient(visit_in_hospital);
     visit_arr.push_back(visit_in_hospital);
 
     return true;
 }
 
-bool hospital::add_surgerieVisit(const string &visitDate, const string &patientId, int numSurgerieRoom, bool isFasting)
+bool hospital::add_surgerieVisit(const string &visitDate, const string &patientId,const string &visit_purpose_visit,const string &departmentName, const string &employeeId,int numSurgerieRoom,bool isFasting)
 {
+    department *departmentVisit = check_department_exist(departmentName);
+    employee *employeePtr = find_employee_byId(employeeId);
+    if (departmentVisit == nullptr)
+
+    {
+        cout << " ERR: The department dosent exist: " << departmentName << "cant add this visit to our hospita";
+        return false;
+    }
+    if (employeePtr == nullptr)
+    {
+        cout << " ERR: The employee dosent exist: " << employeeId << " cant add this visit to our hospita";
+        return false;
+    }
     patient *patientVisit = find_patient_byId(patientId);
     if (patientVisit == nullptr)
     {
         cout << "The patient dos'nt exist in the hospital, cant add the visit.";
         return false;
     }
-    surgerieVisit *visit_in_hospital = new surgerieVisit(visitDate, patientVisit, numSurgerieRoom, isFasting);
+    surgerieVisit *visit_in_hospital = new surgerieVisit(visitDate, patientVisit,visit_purpose_visit,departmentVisit,employeePtr, numSurgerieRoom, isFasting);
     patientVisit->add_visit_patient(visit_in_hospital);
     visit_arr.push_back(visit_in_hospital);
     return true;

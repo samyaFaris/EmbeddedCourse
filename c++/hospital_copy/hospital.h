@@ -38,11 +38,12 @@ public:
     bool add_researcher_to_hospital(const string &researchert_name, const string &researcher_id);
     bool add_doctor_researcher_to_hospital(const string &researchert_name, const string &researcher_id, const string &experties, const string &departmentName);
     bool add_patient_to_hospital(const string &patient_id, const string &patient_name, const int year, const string &gender);
-    bool add_visit(const string &visitDate, const string &patientId);
-    bool add_surgerieVisit(const string &visitDate, const string &patientId,int numSurgerieRoom,bool isFasting);
+    bool add_visit(const string &visitDate, const string &patientId,const string &visit_purpose_visit,const string &departmentName, const string &employeeId);
+    bool add_surgerieVisit(const string &visitDate, const string &patientId,const string &visit_purpose_visit,const string &departmentName, const string &employeeId,int numSurgerieRoom,bool isFasting);
     bool add_article(const string &pupDate, const string &articleName, const string &magazineName, const string &researcherId);
     friend ostream &operator<<(ostream &os, const hospital &h);
     patient *find_patient_byId(const string &patient_id);
     department *check_department_exist(const string &departmentName);
+    employee* find_employee_byId(const string &employeeId);
 };
 #endif
